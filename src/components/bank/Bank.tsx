@@ -125,12 +125,12 @@ function BankDetailsComponent() {
         </form>
       );
 
-    else return (
-      <div >
-        <Header/>
-        <NavButtons/>
-      </div>
-    );
+    // else return (
+    //   <div >
+    //     <Header/>
+    //     <NavButtons/>
+    //   </div>
+    // );
   };
 
   const render = displayData();
