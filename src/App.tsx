@@ -33,7 +33,7 @@ function App() {
           <main>
             <div className="main-app-area">
               {/* APP goes here */}
-              <BankDetails />
+              
               <video
                 className={cn("stream", {
                   hidden: !videoRef.current || !videoStream,
@@ -42,6 +42,7 @@ function App() {
                 autoPlay
                 playsInline
               />
+              <BankDetails />
             </div>
 
             <ControlTray
