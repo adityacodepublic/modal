@@ -51,8 +51,8 @@ export const functionsmap: Record<string, any> = {
   }) => {
     return addTransaction(args.userid, args.amount, args.type, args.description);
   },
-  transferToPerson: (args: { userid: number, reciever:number, amount:number }) => {
-    // return p2ptransfer(args.userid, args.reciever, args.amount);
+  transferToPerson: (args: { userid: number, reciever:number, amount:number, description:string }) => {
+    return p2ptransfer(args.userid, args.reciever, args.amount, args.description);
   },
   issuedScheme: (args: {
     userid: string;
@@ -225,7 +225,7 @@ export const declaration: FunctionDeclaration[] = [
   {
     name: "issueTransaction",
     description:
-      "This initiates a transaction in the bank. it is post endpoint that takes in the userid, amount,type of transaction (credit or debit) and decscription of transaction for which the transaction is being executed. It returns the final balance after the transactions or error if any occours.",
+      "This initiates a transaction in the bank this can be used to pay bills etc. it is post endpoint that takes in the userid, amount,type of transaction (credit or debit) and decscription of transaction for which the transaction is being executed. It returns the final balance after the transactions or error if any occours.",
     parameters: {
       type: SchemaType.OBJECT,
       properties: {
@@ -304,13 +304,9 @@ export const declaration: FunctionDeclaration[] = [
       "Use it to issue a scheme which user selects a scheme from the list of the schemes displayed when using 'getSchemeByBankBalance'. Then issue a 'issueTransaction' with a type of 'debit'. Then if the issueTransaction occurs without any errors run the 'issuedScheme' with the data from the transcation and scheme details",
   },
   {
-    name:"sendtoperson",
-    description:"Use this when user wants to send money to someone. For this get the user id of the recieving person. then issue a 'issueTransaction' of our user with amount to send type debit and description (ie. sending money to respective person). if the 'issueTransaction' executes without any errors do a 'issueTransaction' to reciever with same amount type of credit and same description"
-  },
-  {
     name: "transferToPerson",
     description:
-      "This function allows the transfer mone from the user's account to the receiver’s account. The transaction is carried out by specifying the users account number, the receiver’s account number, and the amount to be transferred.",
+      "transfer money to a person people. This function allows the transfer mone from the user's account to the receiver’s account. The transaction is carried out by specifying the users account number, the receiver’s account number, and the amount to be transferred.",
     parameters: {
       type: SchemaType.OBJECT,
       properties: {
@@ -325,9 +321,13 @@ export const declaration: FunctionDeclaration[] = [
         amount:{
           type: SchemaType.NUMBER,
           description: "Amount to be transefer from the sender to the rceiver"
+        },
+        description: {
+          type: SchemaType.STRING,
+          description: "Automatically generate a description of the money transfer process. eg. sender sent to reciever. dont ask description from user auto generate it."
         }
       },
-      required: ["userid","receiver","amount"],
+      required: ["userid","receiver","amount","description"],
     },
   },
   {

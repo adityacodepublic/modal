@@ -235,7 +235,7 @@ async function performtransaction(user_id: number, amount: number, type: 'credit
       },
     });
 
-    if (response.status === 200) {
+    if (response.status in [200,201,202]) {
       if (!response.data || response.data.length === 0) {
         return { error: 'Account not found' };
       }
